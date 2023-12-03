@@ -1,0 +1,8 @@
+node_modules
+*.lock
+.serverless
+.env.*
+.env*
+!.env.example
+.build
+.esbuild
