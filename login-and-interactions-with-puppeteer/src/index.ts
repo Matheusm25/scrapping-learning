@@ -2,6 +2,10 @@
 import 'dotenv/config';
 import puppeteer from 'puppeteer';
 
+const delay = delayInms => {
+  return new Promise(resolve => setTimeout(resolve, delayInms));
+};
+
 // login to cron-job.org and register a cron job to call webhook.site
 (async () => {
   const loginUrl = 'https://console.cron-job.org/login';
@@ -73,6 +77,13 @@ import puppeteer from 'puppeteer';
   await page.keyboard.up('Control');
   await page.keyboard.press('Backspace');
   await page.keyboard.type(String(process.env.DESTINY_URL));
+
+  await page.click(
+    '.MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-formControl.MuiInput-formControl:has(input[value="15"])',
+  );
+  await page.click('li[data-value="2"]');
+
+  await delay(1000);
 
   await page.click('#create');
 
