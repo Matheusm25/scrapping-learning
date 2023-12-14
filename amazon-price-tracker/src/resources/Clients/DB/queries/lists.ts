@@ -13,3 +13,9 @@ export function getListById(id: string) {
     select * from lists where id = '${id}' and deleted_at is null;
   `;
 }
+
+export function listLists() {
+  return `
+    select * from lists where deleted_at is null;
+  `;
+}

@@ -27,3 +27,12 @@ create-db-structure:
         method: post
         cors: true
         authorizer: verify-master-key
+
+bootstrap-price-checking:
+  handler: src/modules/endpoints/checkPrices.bootstrap
+  events:
+    - http:
+        path: /bootstrap-price-checking
+        method: post
+        cors: true
+        authorizer: verify-master-key

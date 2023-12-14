@@ -58,3 +58,14 @@ export async function handler(event) {
     return error('NotFound', 'List not found', { functionName: 'checkPrices' });
   }
 }
+
+export async function bootstrap() {
+  const DB = new TursoClient();
+  const lists = await DB.listLists();
+
+  for (const list of lists) {
+    await handler({ body: JSON.stringify({ id: list.id }) });
+  }
+
+  return success(lists, 200);
+}

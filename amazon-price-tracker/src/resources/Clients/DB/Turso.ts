@@ -1,6 +1,6 @@
 import { createClient, Client, ResultSet } from '@libsql/client';
 import { createTablesSQL } from './queries/db-structure';
-import { createListSQL, getListById } from './queries/lists';
+import { createListSQL, getListById, listLists } from './queries/lists';
 import {
   createProduct,
   getProductsFromList,
@@ -56,6 +56,11 @@ export class TursoClient {
   async getList(id: string): Promise<List | undefined> {
     const result = await this.client.execute(getListById(id));
     return this.parseResult<List>(result)[0];
+  }
+
+  async listLists(): Promise<Array<List>> {
+    const result = await this.client.execute(listLists());
+    return this.parseResult<List>(result);
   }
 
   async getProductsFromList(
