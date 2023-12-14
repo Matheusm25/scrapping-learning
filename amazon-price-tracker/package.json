@@ -1,0 +1,38 @@
+{
+  "name": "amazon-price-tracker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@libsql/client": "^0.4.0-pre.5",
+    "@sendgrid/mail": "^8.1.0",
+    "axios": "^1.6.2",
+    "cheerio": "^1.0.0-rc.12",
+    "cuid": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/node": "^20.10.4",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "chrome-launcher": "^1.1.0",
+    "esbuild": "^0.19.8",
+    "esbuild-node-externals": "^1.11.0",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.1.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-esbuild": "^1.50.0",
+    "serverless-offline": "^13.3.1",
+    "typescript": "^5.3.3",
+    "yamljs": "^0.3.0"
+  },
+  "scripts": {
+    "start": "STAGE=dev LOCAL=1 sls offline --verbose",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "prestart": "yarn build",
+    "build": "node build.js"
+  }
+}

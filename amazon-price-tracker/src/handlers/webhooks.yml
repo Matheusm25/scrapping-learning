@@ -1,0 +1,15 @@
+register-list-listener:
+  handler: src/modules/endpoints/listener.register
+  events:
+    - http:
+        path: /listener
+        method: post
+        cors: true
+
+check-prices:
+  handler: src/modules/endpoints/checkPrices.handler
+  events:
+    - http:
+        path: /check-prices
+        method: post
+        cors: true

@@ -1,0 +1,28 @@
+service: amazon-price-tracker
+
+plugins:
+  - serverless-esbuild
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+package:
+  individually: true
+
+custom:
+  stage: ${env:STAGE}
+  dotenv:
+    logging: false
+  serverless-offline:
+    host: '0.0.0.0'
+  esbuild:
+    config: './esbuild.config.js'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: us-east-1
+  stage: ${self:custom.stage}
+  timeout: 900
+  memorySize: 1024
+
+functions: ${file(./.esbuild/.build/serverless-dynamic.js)}
