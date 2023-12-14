@@ -1,6 +1,6 @@
 import { ListPrices } from '../../resources/Clients/Crawler/listPrices';
 import { TursoClient } from '../../resources/Clients/DB/Turso';
-import { Postmark } from '../../resources/Clients/MailSender/Postmark';
+import { SMTP } from '../../resources/Clients/MailSender/SMTP';
 import { productsPriceChangeTemplate } from '../../resources/Clients/MailSender/templates/productsPriceChange';
 import { success, error } from '../../resources/utils/http/response';
 
@@ -45,12 +45,16 @@ export async function handler(event) {
     }
 
     if (productsWithLowerPrice.length) {
-      const mailSender = new Postmark();
-      await mailSender.sendMail({
-        body: productsPriceChangeTemplate(productsWithLowerPrice),
-        subject: `Products update - ${new Date().toLocaleDateString()}`,
-        to: [list.email],
-      });
+      try {
+        const mailSender = new SMTP();
+        await mailSender.sendMail({
+          body: productsPriceChangeTemplate(productsWithLowerPrice),
+          subject: `Products update - ${new Date().toLocaleDateString()}`,
+          to: [list.email],
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     return success(currentProductsData, 200);

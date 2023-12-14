@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 import * as cheerio from 'cheerio';
 
 interface ListPrice {
@@ -9,15 +9,10 @@ interface ListPrice {
 }
 
 export class ListPrices {
-  private client: AxiosInstance;
   private baseUrl = 'https://www.amazon.com.br';
 
-  constructor() {
-    this.client = axios.create({});
-  }
-
   async getListPrices(url: string): Promise<Array<ListPrice>> {
-    let response = await this.client.get(
+    let response = await axios.get(
       `${this.baseUrl}${url.replace(this.baseUrl, '')}`,
     );
     const products: Array<ListPrice> = [];
@@ -61,7 +56,7 @@ export class ListPrices {
           .toArray() as Array<ListPrice>),
       );
 
-      response = await this.client.get(
+      response = await axios.get(
         `${this.baseUrl}${dom('input[name="showMoreUrl"]').attr('value')}`,
       );
     } while (keepGoing);
