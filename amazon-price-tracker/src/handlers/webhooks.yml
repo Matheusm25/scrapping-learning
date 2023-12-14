@@ -13,3 +13,11 @@ check-prices:
         path: /check-prices
         method: post
         cors: true
+
+create-db-structure:
+  handler: src/modules/endpoints/createDbStructure.handler
+  events:
+    - http:
+        path: /create-db-structure
+        method: post
+        cors: true

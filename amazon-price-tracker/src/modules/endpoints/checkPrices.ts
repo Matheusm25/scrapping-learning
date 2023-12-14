@@ -11,8 +11,31 @@ export async function handler(event) {
   const crawler = new ListPrices();
   const list = await DB.getList(id);
   if (list) {
-    const products = await crawler.getListPrices(list.url);
-    return success(products, 200);
+    const oldProductsData = await DB.getProductsFromList(list.id);
+    const currentProductsData = await crawler.getListPrices(list.url);
+
+    for (const product of currentProductsData.filter(p => p.price)) {
+      const oldProduct = oldProductsData.find(
+        oldProduct => oldProduct.asin === product.asin,
+      );
+      if (oldProduct) {
+        if (oldProduct.price !== product.price) {
+          await DB.updateProductPrice({
+            price: product.price,
+            product_id: oldProduct.id,
+          });
+        }
+      } else {
+        await DB.createProduct({
+          asin: product.asin,
+          list_id: id,
+          name: product.productName,
+          price: product.price,
+        });
+      }
+    }
+
+    return success(currentProductsData, 200);
   } else {
     return error('NotFound', 'List not found', { functionName: 'checkPrices' });
   }
