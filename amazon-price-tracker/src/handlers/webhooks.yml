@@ -1,3 +1,6 @@
+verify-master-key:
+  handler: src/modules/middlewares/auth.masterKey
+
 register-list-listener:
   handler: src/modules/endpoints/listener.register
   events:
@@ -5,6 +8,7 @@ register-list-listener:
         path: /listener
         method: post
         cors: true
+        authorizer: verify-master-key
 
 check-prices:
   handler: src/modules/endpoints/checkPrices.handler
@@ -13,6 +17,7 @@ check-prices:
         path: /check-prices
         method: post
         cors: true
+        authorizer: verify-master-key
 
 create-db-structure:
   handler: src/modules/endpoints/createDbStructure.handler
@@ -21,3 +26,4 @@ create-db-structure:
         path: /create-db-structure
         method: post
         cors: true
+        authorizer: verify-master-key
