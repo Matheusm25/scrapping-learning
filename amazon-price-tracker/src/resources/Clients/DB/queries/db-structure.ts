@@ -14,6 +14,7 @@ export function createTablesSQL() {
       list_id text not null,
       name text not null,
       current_price_id text,
+      url text not null,
       created_at TIMESTAMP not null default CURRENT_TIMESTAMP,
       updated_at TIMESTAMP not null default CURRENT_TIMESTAMP,
       deleted_at TIMESTAMP

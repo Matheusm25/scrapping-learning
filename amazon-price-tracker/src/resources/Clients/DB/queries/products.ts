@@ -6,11 +6,11 @@ export function getProductsFromList(id: string) {
 }
 
 export function createProduct(
-  product: Pick<Product, 'asin' | 'list_id' | 'name'>,
+  product: Pick<Product, 'asin' | 'list_id' | 'name' | 'url'>,
 ): [string, string] {
   const id = cuid();
   return [
-    `insert into products (id, asin, list_id, name) values ('${id}', '${product.asin}', '${product.list_id}', '${product.name}');`,
+    `insert into products (id, asin, list_id, name, url) values ('${id}', '${product.asin}', '${product.list_id}', '${product.name}', '${product.url}');`,
     id,
   ];
 }

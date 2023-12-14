@@ -68,9 +68,11 @@ export class TursoClient {
   }
 
   async createProduct(
-    product: Pick<Product, 'asin' | 'list_id' | 'name'> & { price: number },
+    product: Pick<Product, 'asin' | 'list_id' | 'name' | 'url'> & {
+      price: number;
+    },
   ) {
-    console.log('creating product');
+    console.log('creating product', product.name);
     const [createProductQuery, productId] = createProduct(product);
     const [createPriceQuery, priceId] = createPrice({
       price: product.price,

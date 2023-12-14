@@ -13,6 +13,7 @@ export interface Product {
   list_id: string;
   name: string;
   current_price_id: string;
+  url: string;
   created_at: string;
   updated_at: string;
   deleted_at: string;

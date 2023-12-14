@@ -2,9 +2,10 @@ import axios, { AxiosInstance } from 'axios';
 import * as cheerio from 'cheerio';
 
 interface ListPrice {
-  productName: string;
+  name: string;
   price: number;
   asin: string;
+  url: string;
 }
 
 export class ListPrices {
@@ -38,7 +39,11 @@ export class ListPrices {
               String(dom(el).attr('data-reposition-action-params')),
             );
             return {
-              productName: dom(el).find('a[id*="itemName"]').attr('title'),
+              name: dom(el).find('a[id*="itemName"]').attr('title'),
+              url: `${this.baseUrl}${dom(el)
+                .find('a[id*="itemName"]')
+                .attr('href')
+                ?.split('?')[0]}`,
               asin: additionalData.itemExternalId
                 .replace('ASIN:', '')
                 .split('|')[0],
