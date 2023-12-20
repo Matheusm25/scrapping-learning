@@ -6,6 +6,8 @@ import { success, error } from '../../resources/utils/http/response';
 
 export async function handler(event) {
   const id = event.body && JSON.parse(event.body).id;
+  const params = event.queryStringParameters;
+
   if (!id) {
     return error('Request', 'id is required', { functionName: 'checkPrices' });
   }
@@ -17,7 +19,7 @@ export async function handler(event) {
     const oldProductsData = await DB.getProductsFromList(list.id);
     const currentProductsData = await crawler.getListPrices(list.url);
 
-    const productsWithLowerPrice: typeof currentProductsData = [];
+    let productsWithLowerPrice: typeof currentProductsData = [];
 
     for (const product of currentProductsData.filter(p => p.price)) {
       const oldProduct = oldProductsData.find(
@@ -44,6 +46,13 @@ export async function handler(event) {
       }
     }
 
+    if (params && params.allPrices) {
+      productsWithLowerPrice = [];
+      for (const product of currentProductsData.filter(p => p.price)) {
+        productsWithLowerPrice.push(product);
+      }
+    }
+
     if (productsWithLowerPrice.length) {
       try {
         const mailSender = new SMTP();
@@ -63,12 +72,15 @@ export async function handler(event) {
   }
 }
 
-export async function bootstrap() {
+export async function bootstrap(event) {
   const DB = new TursoClient();
   const lists = await DB.listLists();
 
   for (const list of lists) {
-    await handler({ body: JSON.stringify({ id: list.id }) });
+    await handler({
+      body: JSON.stringify({ id: list.id }),
+      queryStringParameters: event.queryStringParameters,
+    });
   }
 
   return success(lists, 200);
