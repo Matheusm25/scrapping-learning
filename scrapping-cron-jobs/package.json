@@ -1,0 +1,31 @@
+{
+  "name": "scrapping-cron-jobs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "esbuild": "^0.19.11",
+    "esbuild-node-externals": "^1.12.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.4.0-pre.7",
+    "axios": "^1.6.5",
+    "cheerio": "^1.0.0-rc.12",
+    "cuid": "^3.0.0",
+    "dotenv": "^16.3.1"
+  },
+  "scripts": {
+    "cron": "node .esbuild/.build/execute-cron.js",
+    "precron": "yarn build",
+    "build": "node build.js"
+  }
+}

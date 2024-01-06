@@ -53,18 +53,20 @@ export async function handler(event) {
       }
     }
 
-    if (productsWithLowerPrice.length) {
-      try {
-        const mailSender = new SMTP();
-        await mailSender.sendMail({
-          body: productsPriceChangeTemplate(productsWithLowerPrice),
-          subject: `Products update - ${new Date().toLocaleDateString()}`,
-          to: [list.email],
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    // if (productsWithLowerPrice.length) {
+    //   try {
+    //     const mailSender = new SMTP();
+    //     await mailSender.sendMail({
+    //       body: productsPriceChangeTemplate(productsWithLowerPrice),
+    //       subject: `Products update - ${new Date().toLocaleDateString()}`,
+    //       to: [list.email],
+    //     });
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // }
+
+    console.log(productsWithLowerPrice);
 
     return success(currentProductsData, 200);
   } else {
